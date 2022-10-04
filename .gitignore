@@ -1,0 +1,14 @@
+trackingFarmTank/node_modules/
+trackingFarmTank/.expo/
+trackingFarmTank/dist/
+trackingFarmTank/npm-debug.*
+trackingFarmTank/*.jks
+trackingFarmTank/*.p8
+trackingFarmTank/*.p12
+trackingFarmTank/*.key
+trackingFarmTank/*.mobileprovision
+trackingFarmTank/*.orig.*
+trackingFarmTank/web-build/
+
+# macOS
+trackingFarmTank/.DS_Store
