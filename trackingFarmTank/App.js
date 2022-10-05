@@ -17,12 +17,107 @@ const navTheme = {
 export default function App() {
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
-      <Layout>
-        <Header />
-        <NavigationContainer theme={navTheme}>
-          <AppNavigation />
-        </NavigationContainer>
-      </Layout>
+      <AuthProvider>
+        <Layout>
+          <Header />
+          <NavigationContainer theme={navTheme}>
+            <Root />
+          </NavigationContainer>
+        </Layout>
+      </AuthProvider>
     </ApplicationProvider>
   );
 }
+const Root = () => {
+  const { currentUser, loading, error, cleanError } = useAuth();
+
+  if (error) {
+    return (
+      <View style={styles.centeredView}>
+        <Modal animationType="slide" transparent={true} visible={true}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{error}</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => cleanError()}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    );
+  }
+
+  if (loading) {
+    return (
+      <View style={styles.spinnerContainer}>
+        <ActivityIndicator size="large" color="red" />
+      </View>
+    );
+  }
+
+  return currentUser ? (
+    <AppNavigation />
+  ) : (
+    <AuthNavigator />
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  spinnerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+});
