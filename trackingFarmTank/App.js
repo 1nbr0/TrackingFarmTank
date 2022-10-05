@@ -1,16 +1,28 @@
 import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HomeScreen } from "./assets/screens/HomeScreen";
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import { Layout } from "./assets/components/Layout";
+import { Header } from "./assets/components/Header";
+import { ApplicationProvider } from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
+import { AppNavigation } from "./assets/navigators/AppNavigation";
 
-const Stack = createNativeStackNavigator();
+const navTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: "transparent",
+  },
+};
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Here" component={HomeScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <Layout>
+        <Header />
+        <NavigationContainer theme={navTheme}>
+          <AppNavigation />
+        </NavigationContainer>
+      </Layout>
+    </ApplicationProvider>
   );
 }
