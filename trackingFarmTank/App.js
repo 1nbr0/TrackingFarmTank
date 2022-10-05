@@ -1,20 +1,31 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HomeScreen } from "./assets/screens/HomeScreen";
-import { AuthProvider, useAuth } from "./assets/contexts/AuthProvider";
-import { AuthNavigator } from "./assets/navigators/AuthNavigator";
+import * as React from "react";
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import { Layout } from "./assets/components/Layout";
+import { Header } from "./assets/components/Header";
+import { ApplicationProvider } from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
+import { AppNavigation } from "./assets/navigators/AppNavigation";
 
-const Stack = createNativeStackNavigator();
+const navTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: "transparent",
+  },
+};
 
 export default function App() {
   return (
-    <AuthProvider>
-      <NavigationContainer>
-        <Root />
-      </NavigationContainer>
-    </AuthProvider>
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <AuthProvider>
+        <Layout>
+          <Header />
+          <NavigationContainer theme={navTheme}>
+            <Root />
+          </NavigationContainer>
+        </Layout>
+      </AuthProvider>
+    </ApplicationProvider>
   );
 }
 const Root = () => {
@@ -49,9 +60,7 @@ const Root = () => {
   }
 
   return currentUser ? (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-    </Stack.Navigator>
+    <AppNavigation />
   ) : (
     <AuthNavigator />
   );
