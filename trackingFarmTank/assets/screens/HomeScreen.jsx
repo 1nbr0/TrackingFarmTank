@@ -1,36 +1,48 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
+import { useGroup } from "../contexts/GroupProvider";
+import { Group } from "../components/Group";
 
 export function HomeScreen() {
   const [visibility, setVisibility] = useState(true);
+  const { groups, handleDelete } = useGroup();
   const navigation = useNavigation();
 
   return (
     <>
       <View style={styles.container}>
-        {visibility && (
-          <View style={styles.containerWelcome}>
-            <Text style={styles.titleh1}>
-              Bienvenue sur la page d’accueil !
-            </Text>
-            <Text style={styles.textWelcome}>
-              Veuiller cliquer sur le bouton en bas à droite afin d’ajouter un
-              groupe de silos.
-            </Text>
-          </View>
-        )}
+        {visibility ||
+          (!groups && (
+            <View style={styles.containerWelcome}>
+              <Text style={styles.titleh1}>
+                Bienvenue sur la page d’accueil !
+              </Text>
+              <Text style={styles.textWelcome}>
+                Veuiller cliquer sur le bouton en bas à droite afin d’ajouter un
+                groupe de silos.
+              </Text>
+            </View>
+          ))}
+        <FlatList
+          keyExtractor={(item) => item.id}
+          data={groups}
+          contentContainerStyle={styles.list}
+          renderItem={({ item }) => (
+            <Group group={item} onDelete={() => handleDelete(item.id)} />
+          )}
+        />
+        <Pressable
+          style={styles.addButton}
+          onPress={() => {
+            setVisibility(false);
+            navigation.navigate("FormGroup");
+          }}
+        >
+          <AntDesign name="plus" style={styles.addButtonText} />
+        </Pressable>
       </View>
-      <Pressable
-        style={styles.addButton}
-        onPress={() => {
-          setVisibility(false);
-          navigation.navigate("FormGroup");
-        }}
-      >
-        <AntDesign name="plus" style={styles.addButtonText} />
-      </Pressable>
     </>
   );
 }
@@ -39,8 +51,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    marginTop: 40,
   },
   containerWelcome: {
     height: 240,
@@ -54,6 +65,10 @@ const styles = StyleSheet.create({
   textWelcome: {
     fontSize: 20,
     textAlign: "center",
+  },
+  list: {
+    flexGrow: 1,
+    paddingBottom: 15,
   },
   addButton: {
     position: "absolute",

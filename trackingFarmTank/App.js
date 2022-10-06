@@ -1,6 +1,13 @@
 import * as React from "react";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Modal,
+} from "react-native";
 import { Layout } from "./assets/components/Layout";
 import { Header } from "./assets/components/Header";
 import { ApplicationProvider } from "@ui-kitten/components";
@@ -8,6 +15,8 @@ import * as eva from "@eva-design/eva";
 import { AppNavigation } from "./assets/navigators/AppNavigation";
 import { AuthProvider, useAuth } from "./assets/contexts/AuthProvider";
 import { AuthNavigator } from "./assets/navigators/AuthNavigator";
+import { GroupProvider } from "./assets/contexts/GroupProvider";
+import { TankProvider } from "./assets/contexts/TankProvider";
 
 const navTheme = {
   ...DefaultTheme,
@@ -22,7 +31,6 @@ export default function App() {
     <ApplicationProvider {...eva} theme={eva.light}>
       <AuthProvider>
         <Layout>
-          <Header />
           <NavigationContainer theme={navTheme}>
             <Root />
           </NavigationContainer>
@@ -57,12 +65,21 @@ const Root = () => {
   if (loading) {
     return (
       <View style={styles.spinnerContainer}>
-        <ActivityIndicator size="large" color="red" />
+        <ActivityIndicator size="large" color="#66BB6A" />
       </View>
     );
   }
 
-  return currentUser ? <AppNavigation /> : <AuthNavigator />;
+  return currentUser ? (
+    <GroupProvider>
+      <TankProvider>
+        <Header />
+        <AppNavigation />
+      </TankProvider>
+    </GroupProvider>
+  ) : (
+    <AuthNavigator />
+  );
 };
 
 const styles = StyleSheet.create({

@@ -12,7 +12,7 @@ import { useAuth } from "../contexts/AuthProvider";
 export const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { register, login } = useAuth;
+  const { register, login } = useAuth();
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -20,13 +20,13 @@ export const LoginScreen = () => {
         <TextInput
           placeholder="Email"
           value={email}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={setEmail}
           style={styles.input}
         />
         <TextInput
           placeholder="Password"
           value={password}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={setPassword}
           style={styles.input}
           secureTextEntry
         />

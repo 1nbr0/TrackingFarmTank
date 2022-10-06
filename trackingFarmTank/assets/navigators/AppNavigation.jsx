@@ -3,6 +3,7 @@ import { GroupScreen } from "../screens/GroupScreen";
 import { HomeScreen } from "../screens/HomeScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FormGroup } from "../components/FormGroup";
+import { FormTank } from "../components/FormTank";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,14 @@ export const AppNavigation = () => {
         component={FormGroup}
         options={{
           title: "Ajout d'un groupe",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="FormTank"
+        component={FormTank}
+        options={{
+          title: "Ajout d'un silo",
           headerShown: false,
         }}
       />

@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { TextInput, Text, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "@ui-kitten/components";
+import { useGroup } from "../contexts/GroupProvider";
 
 export const FormGroup = () => {
   const [currentName, setCurrentName] = useState("");
   const [currentDesc, setCurrentDesc] = useState("");
+  const { handleAdd } = useGroup();
   const navigation = useNavigation();
 
   return (
@@ -35,17 +37,16 @@ export const FormGroup = () => {
         <Button
           disabled={!currentName && !currentDesc}
           onPress={() => {
-            handleAdd(currentName && currentDesc);
+            handleAdd(currentName, currentDesc);
             setCurrentName("");
             setCurrentDesc("");
-            navigation.navigate("GroupScreen");
+            navigation.navigate("Accueil");
           }}
           style={styles.btnAdd}
         >
           <Text>Ajouter</Text>
         </Button>
         <Button
-          disabled={!currentName && !currentDesc}
           onPress={() => {
             setCurrentName("");
             setCurrentDesc("");

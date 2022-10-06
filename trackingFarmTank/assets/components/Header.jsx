@@ -8,7 +8,8 @@ import {
   OverflowMenu,
 } from "@ui-kitten/components";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
-// import { auth } from "../../firebase-config";
+import { useAuth } from "../contexts/AuthProvider";
+import { auth } from "../../firebase";
 
 const ProfilIcon = () => (
   <FontAwesome
@@ -25,7 +26,7 @@ const LogoutIcon = () => (
 
 export const Header = () => {
   const [menuVisible, setMenuVisible] = useState(false);
-  // const { logout } = useAuth();
+  const { logout, currentUser } = useAuth();
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -99,10 +100,4 @@ const styles = StyleSheet.create({
     height: 70,
     width: 70,
   },
-  // title: {
-  //   color: "Black",
-  //   paddingLeft: 20,
-  //   fontWeight: "medium",
-  //   fontSize: 24,
-  // },
 });
