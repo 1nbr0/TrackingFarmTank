@@ -6,28 +6,37 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
 } from "react-native";
 import { useAuth } from "../contexts/AuthProvider";
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { register, login } = useAuth;
+  const { register, login } = useAuth("");
 
-  return (
+     return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+
+        <View style={styles.containerLogo}>
+        <Image
+          style={styles.tinyLogo}
+          source={require('../icons/logo_tft.png')}
+        />
+        </View>
+      
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="Email"
+          placeholder="Email:"
           value={email}
           onChangeText={(text) => setEmail(text)}
-          style={styles.input}
+          style={[styles.input,styles.buttonOutlineText1]}
         />
         <TextInput
-          placeholder="Password"
+          placeholder="Password :"
           value={password}
           onChangeText={(text) => setPassword(text)}
-          style={styles.input}
+          style={[styles.input,styles.buttonOutlineText1]}
           secureTextEntry
         />
       </View>
@@ -36,9 +45,10 @@ export const LoginScreen = () => {
         <TouchableOpacity
           onPress={() => login(email, password)}
           disabled={!email || !password}
-          style={styles.button}
+          style={[styles.button, styles.buttonOutline]}
         >
-          <Text style={styles.button}>Login</Text>
+          
+          <Text style={styles.buttonOutlineText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => register(email, password)}
@@ -57,9 +67,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    
   },
   inputContainer: {
     width: "80%",
+    marginTop: 70,
   },
   input: {
     backgroundColor: "white",
@@ -69,13 +81,14 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   buttonContainer: {
-    width: "60%",
+    width: "35%",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
   },
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "white",
+    borderColor: "#A52A2A",
     width: "100%",
     padding: 15,
     borderRadius: 10,
@@ -84,17 +97,52 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: "white",
     marginTop: 5,
-    borderColor: "#0782F9",
+    borderColor: "#A52A2A",
     borderWidth: 2,
   },
   buttonText: {
-    color: "white",
+    color: "black",
     fontWeight: "700",
-    fontSize: 16,
+    fontSize: 13,
   },
   buttonOutlineText: {
-    color: "#0782F9",
+    color: "black",
     fontWeight: "700",
     fontSize: 16,
   },
+
+  buttonOutlineText1: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 18,
+  },
+
+  
+
+  Titre:{
+    backgroundColor: "white",
+    alignItems: "center"
+
+  },
+
+  TitreTexte: { 
+    color: "black",
+    fontWeight: "700",
+    fontSize: 40,
+},
+
+containerLogo: {
+  paddingTop: 50,
+},
+
+tinyLogo: {
+  backgroundColor: "white",
+  width: 100,
+  height: 100,
+},
+
+
+
+  
+
 });

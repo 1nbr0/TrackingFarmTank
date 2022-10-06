@@ -7,6 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
