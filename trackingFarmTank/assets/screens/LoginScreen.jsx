@@ -28,6 +28,7 @@ export const LoginScreen = () => {
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
+          secureTextEntry
         />
       </View>
 

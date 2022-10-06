@@ -1,10 +1,13 @@
 import * as React from "react";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { Layout } from "./assets/components/Layout";
 import { Header } from "./assets/components/Header";
 import { ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import { AppNavigation } from "./assets/navigators/AppNavigation";
+import { AuthProvider, useAuth } from "./assets/contexts/AuthProvider";
+import { AuthNavigator } from "./assets/navigators/AuthNavigator";
 
 const navTheme = {
   ...DefaultTheme,
@@ -59,11 +62,7 @@ const Root = () => {
     );
   }
 
-  return currentUser ? (
-    <AppNavigation />
-  ) : (
-    <AuthNavigator />
-  );
+  return currentUser ? <AppNavigation /> : <AuthNavigator />;
 };
 
 const styles = StyleSheet.create({
